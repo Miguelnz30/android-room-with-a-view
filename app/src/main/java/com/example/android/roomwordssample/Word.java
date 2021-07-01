@@ -16,6 +16,9 @@ package com.example.android.roomwordssample;
  * limitations under the License.
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -34,18 +37,27 @@ import androidx.annotation.NonNull;
 
 @Entity(tableName = "word_table")
 public class Word {
-
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "word")
-    private String mWord;
-
-    public Word(@NonNull String word) {
-        this.mWord = word;
-    }
-
     @NonNull
     public String getWord() {
         return this.mWord;
     }
+
+    @NonNull
+    public String getId() { return this.id; }
+
+    @PrimaryKey
+    @NonNull
+    private String id;
+
+    @NonNull
+    @ColumnInfo(name = "word")
+    private String mWord;
+    public Word( String id, String word) {
+        this.id=id;
+        this.mWord = word;
+    }
+
+
 }
+
+

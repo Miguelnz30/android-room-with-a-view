@@ -16,11 +16,17 @@ package com.example.android.roomwordssample;
  * limitations under the License.
  */
 
+import android.app.Activity;
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -29,20 +35,12 @@ import java.util.List;
 
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
 
-    class WordViewHolder extends RecyclerView.ViewHolder {
-        private final TextView wordItemView;
-
-        private WordViewHolder(View itemView) {
-            super(itemView);
-            wordItemView = itemView.findViewById(R.id.textView);
-        }
-    }
-
     private final LayoutInflater mInflater;
     private List<Word> mWords = Collections.emptyList(); // Cached copy of words
-
-    WordListAdapter(Context context) {
+    private Context mContext;
+    public WordListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+        mContext=context;
     }
 
     @Override
@@ -52,19 +50,59 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     }
 
     @Override
-    public void onBindViewHolder(WordViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
+        if(mWords !=null){
         Word current = mWords.get(position);
-        holder.wordItemView.setText(current.getWord());
+        holder.setData(current.getWord(),position);
+        holder.setListeners();
+        }
+        else {
+            // Covers the case of data not being ready yet.
+            holder.wordItemView.setText(R.string.no_note);
+        }
     }
 
     void setWords(List<Word> words) {
         mWords = words;
         notifyDataSetChanged();
+
     }
 
     @Override
     public int getItemCount() {
-        return mWords.size();
+        if(mWords!=null)
+            return mWords.size();
+        else return 0;
+    }
+
+    public Word getWordAtPosition (int position) {
+        return mWords.get(position);
+    }
+    class WordViewHolder extends RecyclerView.ViewHolder {
+        private final TextView wordItemView;
+        private int mPosition;
+        private ImageView  imgEdit;
+
+        private WordViewHolder(View itemView) {
+            super(itemView);
+            wordItemView = itemView.findViewById(R.id.textView);
+            imgEdit 	 = itemView.findViewById(R.id.ivRowEdit);
+        }
+        public void setData(String note, int position) {
+            wordItemView.setText(note);
+            mPosition = position;
+        }
+
+        public void setListeners() {
+            imgEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, EditWordActivity.class);
+                    intent.putExtra("note_id", mWords.get(mPosition).getId());
+                    ((Activity)mContext).startActivityForResult(intent, MainActivity.UPDATE_WORD_ACTIVITY_REQUEST_CODE);
+                }
+            });
+        }
     }
 }
 

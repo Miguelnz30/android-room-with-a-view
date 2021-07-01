@@ -18,4 +18,7 @@ limitations under the License. -->
     <string name="hint_word">Word…</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="title_activity_edit_word">EditWordActivity</string>
+    <string name="update">update up</string>
+    <string name="no_note">no se guardo</string>
 </resources>
