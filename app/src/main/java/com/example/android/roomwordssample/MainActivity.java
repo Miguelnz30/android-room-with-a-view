@@ -19,6 +19,7 @@ package com.example.android.roomwordssample;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,10 +36,8 @@ import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
-    public static final int UPDATE_WORD_ACTIVITY_REQUEST_CODE = 2;
-
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE =1;
+    public static final int UPDATE_WORD_ACTIVITY_REQUEST_CODE =2;
     private WordViewModel mWordViewModel;
 
     @Override
@@ -95,8 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         Word myWord = adapter.getWordAtPosition(position);
                         Toast.makeText(MainActivity.this, "Deleting " +
                                 myWord.getWord(), Toast.LENGTH_LONG).show();
-
-                        // Delete the word
+                        //Delete the word
                         mWordViewModel.deleteWord(myWord);
                     }
                 });
@@ -109,14 +107,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             final String word_id = UUID.randomUUID().toString();
+
             Word word = new Word(word_id, data.getStringExtra(NewWordActivity.EXTRA_REPLY));
             mWordViewModel.insert(word);
         } else if (requestCode == UPDATE_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-
             // Code to update the note
             Word note = new Word(
                     data.getStringExtra(EditWordActivity.NOTE_ID),
                     data.getStringExtra(EditWordActivity.UPDATED_NOTE));
+
             mWordViewModel.updateWord(note);
 
             Toast.makeText(

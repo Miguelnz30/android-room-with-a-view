@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".EditWordActivity"
     android:orientation="vertical">
+
+
+
     <EditText
         android:id="@+id/edit_word1"
         android:layout_width="match_parent"
@@ -37,4 +41,20 @@
             android:text="CANCEL"
             android:textColor="@color/buttonLabel" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/imagen"
+        android:layout_width="152dp"
+        android:layout_height="68dp"
+        android:text="Imagen"
+        android:layout_margin="130dp"
+        android:onClick="takePicture"
+        />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
+
 </LinearLayout>

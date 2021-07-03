@@ -45,6 +45,9 @@ public class Word {
     @NonNull
     public String getId() { return this.id; }
 
+
+
+
     @PrimaryKey
     @NonNull
     private String id;
@@ -52,9 +55,13 @@ public class Word {
     @NonNull
     @ColumnInfo(name = "word")
     private String mWord;
+
+
+
     public Word( String id, String word) {
         this.id=id;
         this.mWord = word;
+
     }
 
 
